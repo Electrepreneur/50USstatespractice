@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unblocked Vault - Play Free Web Games</title>
+  <title>50 US States Geography Practice Tool</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; display: flex; flex-direction: column; min-height: 100vh; }
@@ -20,56 +20,85 @@
     .cat-btn { background: #1e293b; color: #94a3b8; border: 1px solid #334155; padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
     .cat-btn:hover, .cat-btn.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; font-weight: 600; }
 
-    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
     
     .game-card { background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
     .game-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-color: #38bdf8; }
-    .game-card img { width: 100%; height: 140px; object-fit: cover; }
+    .game-card img { width: 100%; height: 140px; object-fit: cover; background-color: #000; }
     .game-card .info { padding: 0.8rem; }
     .game-card h3 { font-size: 1rem; color: #f8fafc; margin-bottom: 0.2rem; }
     .game-card p { font-size: 0.8rem; color: #94a3b8; }
 
-    /* Game Modal / Container */
     .game-view { display: none; flex-direction: column; align-items: center; gap: 1rem; }
     .game-view.active { display: flex; }
     .back-btn { align-self: flex-start; background: #334155; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
-    iframe { width: 100%; max-width: 900px; height: 600px; border: none; border-radius: 12px; background: #000; }
+    iframe { width: 100%; max-width: 960px; height: 650px; border: none; border-radius: 12px; background: #000; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Unblocked Vault</h1>
-    <input type="text" id="searchInput" class="search-bar" placeholder="Search games..." onkeyup="filterGames()" />
+    <h1>US Practice Hub</h1>
+    <input type="text" id="searchInput" class="search-bar" placeholder="Search activities..." onkeyup="filterGames()" />
   </header>
 
   <main>
-    <!-- Game Selection Interface -->
     <div id="hubView">
       <div class="categories">
         <button class="cat-btn active" onclick="filterCategory('all', this)">All</button>
+        <button class="cat-btn" onclick="filterCategory('strategy', this)">Strategy</button>
         <button class="cat-btn" onclick="filterCategory('arcade', this)">Arcade</button>
         <button class="cat-btn" onclick="filterCategory('puzzle', this)">Puzzle</button>
-        <button class="cat-btn" onclick="filterCategory('action', this)">Action</button>
       </div>
 
       <div class="game-grid" id="gameGrid"></div>
     </div>
 
-    <!-- Active Game Frame View -->
     <div id="gameView" class="game-view">
-      <button class="back-btn" onclick="closeGame()">← Back to Games</button>
+      <button class="back-btn" onclick="closeGame()">← Back to Hub</button>
       <h2 id="currentGameTitle"></h2>
       <iframe id="gameFrame" src="" allowfullscreen></iframe>
     </div>
   </main>
 
   <script>
-    // Game Database (Add new games here)
+    // Updated game list with working iframe embed URLs
     const games = [
-      { id: 1, name: "2048", category: "puzzle", thumb: "https://via.placeholder.com/200x140?text=2048", url: "https://play2048.co/" },
-      { id: 2, name: "Dino Runner", category: "arcade", thumb: "https://via.placeholder.com/200x140?text=Dino+Runner", url: "https://chromedino.com/" },
-      { id: 3, name: "Hextris", category: "arcade", thumb: "https://via.placeholder.com/200x140?text=Hextris", url: "https://hextris.io/" }
+      { 
+        id: 1, 
+        name: "3D Chess Set", 
+        category: "strategy", 
+        thumb: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400&auto=format&fit=crop&q=60", 
+        url: "https://lichess.org/tv/frame?theme=brown&bg=dark" 
+      },
+      { 
+        id: 2, 
+        name: "Dino Runner", 
+        category: "arcade", 
+        thumb: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=60", 
+        url: "https://chromedino.com/" 
+      },
+      { 
+        id: 3, 
+        name: "Hextris", 
+        category: "puzzle", 
+        thumb: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=60", 
+        url: "https://hextris.github.io/hextris/" 
+      },
+      { 
+        id: 4, 
+        name: "Clumsy Bird (Flappy)", 
+        category: "arcade", 
+        thumb: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&auto=format&fit=crop&q=60", 
+        url: "https://ellisonleao.github.io/clumsy-bird/" 
+      },
+      { 
+        id: 5, 
+        name: "Pacman Canvas", 
+        category: "arcade", 
+        thumb: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&auto=format&fit=crop&q=60", 
+        url: "https://pacman-canvas.herokuapp.com/" 
+      }
     ];
 
     let currentCategory = 'all';
@@ -119,7 +148,6 @@
       filterGames();
     }
 
-    // Initial Load
     renderGames(games);
   </script>
 </body>
